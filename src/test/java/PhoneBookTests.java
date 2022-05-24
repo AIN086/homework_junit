@@ -1,6 +1,4 @@
 import org.junit.jupiter.api.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class PhoneBookTests {
@@ -37,17 +35,49 @@ public class PhoneBookTests {
     }
 
     @Test
-    public void testMakeContact(){
-        List<Contact> list = new ArrayList<>();
+    public void testAddContactToGroup(){
+        String groupname = "Friends";
         String name = "Alexandr";
         String number = "8-999-888-99-88";
 
-        sut.makeContact(list, name, number);
+        sut.makeGroup(groupname);
+        sut.addContactToGroup(new Contact(name, number), groupname);
 
-        boolean result = list.isEmpty();
+        boolean result = sut.searchGroupOfContact(groupname).isEmpty();
 
         Assertions.assertFalse(result);                // проверка на заполнение list созданным контактом
-
-
     }
+
+    @Test
+    public void testSearchGroupOfContact(){
+        String groupName = "Friends";
+        String name = "Alexandr";
+        String number = "8-999-888-99-88";
+
+        sut.makeGroup(groupName);
+        sut.addContactToGroup(new Contact(name, number), groupName);
+
+        String expected = "Список контактов в группе " + groupName + ":" + "\n"
+                + name + " " + "(" + number + ")\n";
+
+        String result = sut.searchGroupOfContact(groupName);
+
+        Assertions.assertEquals(expected, result);
+    }
+
+    @Test
+    public void testSearchContactOfNumber(){
+        String groupName = "Friends";
+        String name = "Alexandr";
+        String number = "8-999-888-99-88";
+
+        sut.makeGroup(groupName);
+        sut.addContactToGroup(new Contact(name, number), groupName);
+
+        String expected = name + " (" + number + ")";
+        String result = String.valueOf(sut.searchContactOfNumber(number));
+
+        Assertions.assertEquals(expected, result);
+    }
+
 }

@@ -43,6 +43,7 @@ public class ContactTests {
         String expected = name + " (" + number + ")";
 
         String result = contact.toString();
+
         Assertions.assertEquals(expected, result);
     }
 }

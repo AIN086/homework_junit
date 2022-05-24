@@ -13,6 +13,10 @@ public class Contact {
         return number;
     }
 
+    public String getName(){
+        return name;
+    }
+
     public String toString() {
         return name + " (" + number + ")";
     }
